@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+def agentJar = project(':agent').tasks.jar
+
+tasks.register('runWithAgent', JavaExec) {
+    dependsOn agentJar
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.example.app.Application'
+    jvmArgs = ["-javaagent:${agentJar.archiveFile.get().asFile.absolutePath}"]
+}
+
+bootRun {
+    dependsOn agentJar
+    jvmArgs = ["-javaagent:${agentJar.archiveFile.get().asFile.absolutePath}"]
+}

@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Premain-Class': 'com.example.agent.MyAgent',
+            'Can-Retransform-Classes': 'true',
+            'Can-Redefine-Classes': 'true'
+        )
+    }
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'HowToBuildJavaAgent'
+
+include 'agent'
+include 'sample-app'
