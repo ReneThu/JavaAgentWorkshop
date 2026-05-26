@@ -5,6 +5,8 @@ import org.objectweb.asm.Opcodes;
 
 public class RequestMethodVisitor extends MethodVisitor {
 
+    private static final String LOGGER = "com/example/agent/injectable/RequestLogger";
+
     public RequestMethodVisitor(MethodVisitor next) {
         super(Opcodes.ASM9, next);
     }
@@ -12,22 +14,18 @@ public class RequestMethodVisitor extends MethodVisitor {
     @Override
     public void visitCode() {
         super.visitCode();
-        emitPrintln("[Agent] >>> Request started");
+        mv.visitVarInsn(Opcodes.ALOAD, 1);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, LOGGER, "onEntry",
+                "(Ljava/lang/Object;)V", false);
     }
 
     @Override
     public void visitInsn(int opcode) {
         if ((opcode >= Opcodes.IRETURN && opcode <= Opcodes.RETURN) || opcode == Opcodes.ATHROW) {
-            emitPrintln("[Agent] <<< Request finished");
+            mv.visitVarInsn(Opcodes.ALOAD, 1);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, LOGGER, "onExit",
+                    "(Ljava/lang/Object;)V", false);
         }
         super.visitInsn(opcode);
-    }
-
-    private void emitPrintln(String message) {
-        mv.visitFieldInsn(Opcodes.GETSTATIC,
-                "java/lang/System", "out", "Ljava/io/PrintStream;");
-        mv.visitLdcInsn(message);
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
-                "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
     }
 }

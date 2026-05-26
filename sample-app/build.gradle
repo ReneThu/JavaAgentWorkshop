@@ -19,5 +19,8 @@ tasks.register('runWithAgent', JavaExec) {
 
 bootRun {
     dependsOn agentJar
-    jvmArgs = ["-javaagent:${agentJar.archiveFile.get().asFile.absolutePath}"]
+    jvmArgs = [
+        "-javaagent:${agentJar.archiveFile.get().asFile.absolutePath}",
+        "--add-opens=java.base/java.lang=ALL-UNNAMED"
+    ]
 }

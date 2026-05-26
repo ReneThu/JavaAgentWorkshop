@@ -18,5 +18,12 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    eachFile { details ->
+        if (details.path.startsWith('com/example/agent/injectable/')) {
+            details.path = 'injectable/' + details.path
+        }
+    }
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
