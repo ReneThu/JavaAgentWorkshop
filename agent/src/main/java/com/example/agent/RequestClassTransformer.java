@@ -6,9 +6,9 @@ import java.security.ProtectionDomain;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-public class HelloClassTransformer implements ClassFileTransformer {
+public class RequestClassTransformer implements ClassFileTransformer {
 
-    private static final String TARGET = "com/example/app/HelloController";
+    private static final String TARGET = "org/springframework/web/servlet/FrameworkServlet";
 
     @Override
     public byte[] transform(ClassLoader loader, String className,
@@ -22,8 +22,7 @@ public class HelloClassTransformer implements ClassFileTransformer {
 
         ClassReader reader = new ClassReader(classfileBuffer);
         ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_MAXS);
-        HelloClassVisitor visitor = new HelloClassVisitor(writer);
-        reader.accept(visitor, 0);
+        reader.accept(new RequestClassVisitor(writer), 0);
         return writer.toByteArray();
     }
 }

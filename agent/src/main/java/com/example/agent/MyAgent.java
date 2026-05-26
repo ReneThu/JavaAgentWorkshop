@@ -6,6 +6,6 @@ public class MyAgent {
 
     public static void premain(String agentArgs, Instrumentation inst) {
         System.out.println("[Agent] Hello from premain! The agent is loaded.");
-        inst.addTransformer(new HelloClassTransformer(), true);
+        inst.addTransformer(new RequestClassTransformer(), true);
     }
 }

@@ -4,9 +4,9 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class HelloClassVisitor extends ClassVisitor {
+public class RequestClassVisitor extends ClassVisitor {
 
-    public HelloClassVisitor(ClassVisitor next) {
+    public RequestClassVisitor(ClassVisitor next) {
         super(Opcodes.ASM9, next);
     }
 
@@ -14,8 +14,9 @@ public class HelloClassVisitor extends ClassVisitor {
     public MethodVisitor visitMethod(int access, String name, String descriptor,
                                      String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
-        if ("hello".equals(name)) {
-            return new HelloMethodVisitor(mv);
+
+        if ("service".equals(name) && descriptor.startsWith("(Ljakarta/servlet/http/HttpServletRequest;")) {
+            return new RequestMethodVisitor(mv);
         }
         return mv;
     }
