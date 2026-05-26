@@ -6,8 +6,11 @@ import org.objectweb.asm.Opcodes;
 
 public class RequestClassVisitor extends ClassVisitor {
 
-    public RequestClassVisitor(ClassVisitor next) {
+    private final String className;
+
+    public RequestClassVisitor(ClassVisitor next, String className) {
         super(Opcodes.ASM9, next);
+        this.className = className;
     }
 
     @Override
@@ -15,9 +18,15 @@ public class RequestClassVisitor extends ClassVisitor {
                                      String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
 
-        if ("service".equals(name) && descriptor.startsWith("(Ljakarta/servlet/http/HttpServletRequest;")) {
+        if ("org/springframework/web/servlet/FrameworkServlet".equals(className)
+                && "service".equals(name)
+                && descriptor.startsWith("(Ljakarta/servlet/http/HttpServletRequest;")) {
             return new RequestMethodVisitor(mv);
+        }
+        if ("com/example/app/GreetingService".equals(className) && "greet".equals(name)) {
+            return new ServiceMethodVisitor(mv, name);
         }
         return mv;
     }
 }
+

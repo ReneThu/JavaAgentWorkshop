@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation 'org.ow2.asm:asm:9.7'
     compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    compileOnly 'org.springframework:spring-web:6.1.6'
 }
 
 jar {
