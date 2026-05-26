@@ -1,0 +1,29 @@
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+*.class
+*.jar
+!gradle/wrapper/*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+
+# Images (kept locally only)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
+
+# Local notes (not committed)
+CHECKPOINTS.md

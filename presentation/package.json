@@ -1,0 +1,13 @@
+{
+  "name": "how-to-build-java-agent",
+  "private": true,
+  "scripts": {
+    "dev": "slidev --open --port 4000",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.50.0",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}
